@@ -1,0 +1,65 @@
+-- MySQL Practice Queries using Sakila Database
+-- Author: Sunanda Chikane
+-- Topics: SELECT, WHERE, ORDER BY, GROUP BY, LIMIT, Aggregates
+
+USE sakila;
+
+-- 1. Payments made on 2005-07-31
+SELECT * FROM payment
+WHERE DATE(payment_date) = '2005-07-31';
+
+-- 2. Payments by staff member with ID 2
+SELECT * FROM payment
+WHERE staff_id = '2';
+
+-- 3. Payments by customer 7 after 2005-08-01
+SELECT * FROM payment
+WHERE customer_id = '7' AND payment_date > '2005-08-01';
+
+-- 4. Lowest 10 payment amounts
+SELECT amount FROM payment
+ORDER BY amount ASC
+LIMIT 10;
+
+-- 5. First 5 payments based on payment date
+SELECT amount, payment_date FROM payment
+ORDER BY payment_date ASC
+LIMIT 5;
+
+-- 6. All payment amounts in ascending order
+SELECT amount FROM payment
+ORDER BY amount ASC;
+
+-- 7. Latest payments made by customer 10
+SELECT payment_date, customer_id, amount FROM payment
+WHERE customer_id = '10'
+ORDER BY payment_date DESC;
+
+-- 8. View all payments
+SELECT * FROM payment;
+
+-- 9. Total staff_id sum grouped by staff (likely incorrect logic, just for practice)
+SELECT staff_id, SUM(staff_id) AS total_amt FROM payment
+GROUP BY staff_id;
+
+-- 10. Total customer_id sum grouped by customer (likely incorrect logic, for practice)
+SELECT customer_id, SUM(customer_id) AS total_mt FROM payment
+GROUP BY customer_id;
+
+-- 11. Average payment amount per customer
+SELECT customer_id, AVG(amount) AS avg_cust FROM payment
+GROUP BY customer_id;
+
+-- 12. Sum by payment date (incorrect column used; payment_date can't be summed)
+-- Likely meant: COUNT or SUM(amount) instead of SUM(payment_date)
+-- SELECT SUM(payment_date) FROM payment GROUP BY payment_date; -- Incorrect
+
+-- 13. Top 3 customers by total amount paid
+SELECT customer_id, SUM(amount) AS total_amount FROM payment
+GROUP BY customer_id
+ORDER BY total_amount DESC
+LIMIT 3;
+
+-- 14. Payments made on 2005-05-25
+SELECT * FROM payment
+WHERE DATE(payment_date) = '2005-05-25';
